@@ -61,6 +61,7 @@ import { ViewStudentComponent } from './students/view-student/view-student.compo
     ViewStudentComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -100,8 +101,7 @@ import { ViewStudentComponent } from './students/view-student/view-student.compo
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    HttpClientModule,
-    FormsModule,
+    HttpClientModule
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA

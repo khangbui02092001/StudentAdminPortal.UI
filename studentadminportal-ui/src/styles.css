@@ -2,7 +2,15 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.page-header { background-color: #f1f1f1; }
-.page-header { padding:16px 0px; margin: 0; }
-.ml-1 {margin-left: 1em;}
-.mt-1 {margin-top: 1em;}
+
+.page-header{
+  background: #f1f1f1;
+}
+
+.page-header{
+  padding: 16px 0;
+  margin: 0;
+}
+.mt-1{
+  margin-top: 1em;
+}

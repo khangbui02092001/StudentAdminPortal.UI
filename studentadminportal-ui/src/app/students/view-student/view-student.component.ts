@@ -1,7 +1,10 @@
-import { StudentService } from './../student.service';
-import { Student } from './../../models/ui-models/student.model';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Gender } from 'src/app/models/ui-models/gender.model';
+import { Student } from 'src/app/models/ui-models/student.model';
+import { GenderService } from 'src/app/services/gender.service';
+import { StudentService } from '../student.service';
 
 @Component({
   selector: 'app-view-student',
@@ -10,49 +13,72 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewStudentComponent implements OnInit {
   studentId: string | null | undefined;
-
-  student: Student ={
+  student: Student = {
     id:'',
     firstName:'',
     lastName:'',
     dateOfBirth:'',
     email:'',
     mobile: 0,
-    genderId:'',
+    genderId: '',
     profileImageUrl:'',
     gender:{
       id:'',
-      description:''
+      description:'',
     },
-    address: {
+    address:{
       id:'',
       physicalAddress:'',
-      postalAddress:'',
+      postalAddress:''
     }
   }
 
+  genderList: Gender[] = [];
+
+
+
   constructor(private readonly studentService: StudentService,
-    private readonly route: ActivatedRoute) { }
+    private readonly route: ActivatedRoute,
+    private readonly genderService: GenderService,
+    private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-
     this.route.paramMap.subscribe(
-      (params) =>{
+      (params)=>{
         this.studentId = params.get('id');
-        if(this.studentId)
-        {
+
+        if(this.studentId){
           this.studentService.getStudent(this.studentId)
           .subscribe(
             (successResponse) => {
-             this.student=successResponse;
+              this.student = successResponse;
             }
-
+          );
+          this.genderService.getGenderList()
+          .subscribe(
+            (successResponse) =>{
+              this.genderList = successResponse;
+            }
           );
         }
       }
     );
+  }
 
+  onUpdate(): void {
+    this.studentService.updateStudent(this.student.id, this.student )
+    .subscribe(
+      (successResponse) =>{
+        // showw
+        this.snackbar.open('Student updated successfully', undefined,{
+          duration: 2000
+        });
+      },
+      (errorResponse)=>{
 
+      }
+
+    );
   }
 
 }
